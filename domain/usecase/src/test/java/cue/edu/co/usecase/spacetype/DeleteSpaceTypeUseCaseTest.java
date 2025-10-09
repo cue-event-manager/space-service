@@ -32,9 +32,7 @@ class DeleteSpaceTypeUseCaseTest {
 
     @BeforeEach
     void setUp() {
-        command = DeleteSpaceTypeCommand.builder()
-                .id(1L)
-                .build();
+        command = new DeleteSpaceTypeCommand(1L);
 
         existingSpaceType = SpaceType.builder()
                 .id(1L)

@@ -32,9 +32,7 @@ class GetSpaceTypeUseCaseTest {
 
     @BeforeEach
     void setUp() {
-        query = GetSpaceTypeQuery.builder()
-                .id(1L)
-                .build();
+        query = new GetSpaceTypeQuery(1L);
 
         spaceType = SpaceType.builder()
                 .id(1L)

@@ -1,10 +1,6 @@
 package cue.edu.co.model.spacetype;
 
-import lombok.Builder;
-import lombok.Data;
-
-@Data
-@Builder
-public class DeleteSpaceTypeCommand {
-    private Long id;
+public record DeleteSpaceTypeCommand(
+        Long id
+) {
 }

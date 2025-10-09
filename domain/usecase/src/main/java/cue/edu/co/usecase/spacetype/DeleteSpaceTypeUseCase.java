@@ -10,10 +10,10 @@ public class DeleteSpaceTypeUseCase {
     private final SpaceTypeRepository spaceTypeRepository;
 
     public void execute(DeleteSpaceTypeCommand command) {
-        if (!spaceTypeRepository.findById(command.getId()).isPresent()) {
-            throw new SpaceTypeNotFoundException(command.getId());
+        if (!spaceTypeRepository.findById(command.id()).isPresent()) {
+            throw new SpaceTypeNotFoundException(command.id());
         }
 
-        spaceTypeRepository.deleteById(command.getId());
+        spaceTypeRepository.deleteById(command.id());
     }
 }

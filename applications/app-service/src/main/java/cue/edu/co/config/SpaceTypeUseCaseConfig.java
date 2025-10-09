@@ -28,8 +28,4 @@ public class SpaceTypeUseCaseConfig {
         return new GetSpaceTypeUseCase(spaceTypeRepository);
     }
 
-    @Bean
-    public GetSpaceTypePageUseCase getSpaceTypePageUseCase(SpaceTypeRepository spaceTypeRepository) {
-        return new GetSpaceTypePageUseCase(spaceTypeRepository);
-    }
 }

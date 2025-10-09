@@ -1,11 +1,16 @@
 package cue.edu.co.model.spacetype;
 
-import lombok.Builder;
-import lombok.Data;
+import java.time.LocalDateTime;
 
-@Data
-@Builder
-public class CreateSpaceTypeCommand {
-    private String name;
-    private String description;
+public record CreateSpaceTypeCommand(
+        String name,
+        String description
+) {
+    public SpaceType toDomain() {
+        return SpaceType.builder()
+                .name(name)
+                .description(description)
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
 }

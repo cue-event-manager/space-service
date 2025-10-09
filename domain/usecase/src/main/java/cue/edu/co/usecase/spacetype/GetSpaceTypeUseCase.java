@@ -11,7 +11,7 @@ public class GetSpaceTypeUseCase {
     private final SpaceTypeRepository spaceTypeRepository;
 
     public SpaceType execute(GetSpaceTypeQuery query) {
-        return spaceTypeRepository.findById(query.getId())
-                .orElseThrow(() -> new SpaceTypeNotFoundException(query.getId()));
+        return spaceTypeRepository.findById(query.id())
+                .orElseThrow(() -> new SpaceTypeNotFoundException(query.id()));
     }
 }

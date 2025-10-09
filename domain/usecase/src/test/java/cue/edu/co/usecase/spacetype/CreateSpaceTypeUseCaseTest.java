@@ -31,10 +31,7 @@ class CreateSpaceTypeUseCaseTest {
 
     @BeforeEach
     void setUp() {
-        command = CreateSpaceTypeCommand.builder()
-                .name("Classroom")
-                .description("Standard classroom")
-                .build();
+        command = new CreateSpaceTypeCommand("Classroom", "Standard classroom");
     }
 
     @Test

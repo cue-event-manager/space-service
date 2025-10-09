@@ -33,11 +33,7 @@ class UpdateSpaceTypeUseCaseTest {
 
     @BeforeEach
     void setUp() {
-        command = UpdateSpaceTypeCommand.builder()
-                .id(1L)
-                .name("Laboratory Updated")
-                .description("Updated description")
-                .build();
+        command = new UpdateSpaceTypeCommand(1L, "Laboratory Updated", "Updated description");
 
         existingSpaceType = SpaceType.builder()
                 .id(1L)

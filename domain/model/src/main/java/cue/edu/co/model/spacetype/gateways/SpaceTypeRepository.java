@@ -1,8 +1,6 @@
 package cue.edu.co.model.spacetype.gateways;
 
-import cue.edu.co.model.spacetype.GetSpaceTypePageQuery;
 import cue.edu.co.model.spacetype.SpaceType;
-import cue.edu.co.model.spacetype.SpaceTypePageResult;
 
 import java.util.Optional;
 
@@ -10,7 +8,6 @@ public interface SpaceTypeRepository {
     SpaceType save(SpaceType spaceType);
     Optional<SpaceType> findById(Long id);
     Optional<SpaceType> findByName(String name);
-    SpaceTypePageResult findAll(GetSpaceTypePageQuery query);
     void deleteById(Long id);
     boolean existsByName(String name);
     boolean existsByNameAndIdNot(String name, Long id);

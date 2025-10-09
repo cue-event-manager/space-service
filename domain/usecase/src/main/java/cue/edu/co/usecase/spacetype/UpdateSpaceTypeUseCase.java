@@ -12,17 +12,12 @@ public class UpdateSpaceTypeUseCase {
     private final SpaceTypeRepository spaceTypeRepository;
 
     public SpaceType execute(UpdateSpaceTypeCommand command) {
-        SpaceType existingSpaceType = spaceTypeRepository.findById(command.getId())
-                .orElseThrow(() -> new SpaceTypeNotFoundException(command.getId()));
+        SpaceType existingSpaceType = spaceTypeRepository.findById(command.id())
+                .orElseThrow(() -> new SpaceTypeNotFoundException(command.id()));
 
-        validateUniqueName(command.getName(), command.getId());
+        validateUniqueName(command.name(), command.id());
 
-        SpaceType updatedSpaceType = SpaceType.builder()
-                .id(existingSpaceType.getId())
-                .name(command.getName())
-                .description(command.getDescription())
-                .createdAt(existingSpaceType.getCreatedAt())
-                .build();
+        SpaceType updatedSpaceType = command.toDomain(existingSpaceType);
 
         return spaceTypeRepository.save(updatedSpaceType);
     }

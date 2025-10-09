@@ -13,13 +13,9 @@ public class CreateSpaceTypeUseCase {
     private final SpaceTypeRepository spaceTypeRepository;
 
     public SpaceType execute(CreateSpaceTypeCommand command) {
-        validateUniqueName(command.getName());
+        validateUniqueName(command.name());
 
-        SpaceType spaceType = SpaceType.builder()
-                .name(command.getName())
-                .description(command.getDescription())
-                .createdAt(LocalDateTime.now())
-                .build();
+        SpaceType spaceType = command.toDomain();
 
         return spaceTypeRepository.save(spaceType);
     }
