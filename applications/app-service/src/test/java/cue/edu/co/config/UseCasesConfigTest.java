@@ -1,11 +1,13 @@
 package cue.edu.co.config;
 
+import cue.edu.co.model.spacetype.gateways.SpaceTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class UseCasesConfigTest {
 
@@ -27,8 +29,13 @@ public class UseCasesConfigTest {
     }
 
     @Configuration
-    @Import(UseCasesConfig.class)
+    @Import({UseCasesConfig.class, SpaceTypeUseCaseConfig.class})
     static class TestConfig {
+
+        @Bean
+        public SpaceTypeRepository spaceTypeRepository() {
+            return mock(SpaceTypeRepository.class);
+        }
 
         @Bean
         public MyUseCase myUseCase() {

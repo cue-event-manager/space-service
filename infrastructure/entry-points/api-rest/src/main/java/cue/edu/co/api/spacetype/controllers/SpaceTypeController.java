@@ -1,10 +1,15 @@
 package cue.edu.co.api.spacetype.controllers;
 
+import cue.edu.co.api.common.dtos.PaginationRequestDto;
+import cue.edu.co.api.common.dtos.PaginationResponseDto;
 import cue.edu.co.api.spacetype.dtos.CreateSpaceTypeRequestDto;
+import cue.edu.co.api.spacetype.dtos.SpaceTypePaginationRequestDto;
 import cue.edu.co.api.spacetype.dtos.SpaceTypeResponseDto;
 import cue.edu.co.api.spacetype.dtos.UpdateSpaceTypeRequestDto;
 import cue.edu.co.api.spacetype.mappers.SpaceTypeDtoMapper;
+import cue.edu.co.model.common.results.PageResult;
 import cue.edu.co.model.spacetype.*;
+import cue.edu.co.model.spacetype.queries.SpaceTypePaginationQuery;
 import cue.edu.co.usecase.spacetype.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +25,7 @@ public class SpaceTypeController {
     private final UpdateSpaceTypeUseCase updateSpaceTypeUseCase;
     private final DeleteSpaceTypeUseCase deleteSpaceTypeUseCase;
     private final GetSpaceTypeUseCase getSpaceTypeUseCase;
+    private final GetAllSpaceTypesUseCase getAllSpaceTypesUseCase;
     private final SpaceTypeDtoMapper spaceTypeDtoMapper;
 
     @PostMapping
@@ -28,6 +34,21 @@ public class SpaceTypeController {
         SpaceType spaceType = createSpaceTypeUseCase.execute(command);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(spaceTypeDtoMapper.toDto(spaceType));
+    }
+
+    @GetMapping
+    public ResponseEntity<PaginationResponseDto<SpaceTypeResponseDto>> getAll(
+            @Valid SpaceTypePaginationRequestDto requestDto,
+            @Valid PaginationRequestDto paginationRequestDto
+            ) {
+
+        SpaceTypePaginationQuery query = spaceTypeDtoMapper.toQuery(requestDto, paginationRequestDto);
+
+        PageResult<SpaceType> pageResult = getAllSpaceTypesUseCase.execute(query);
+
+        PaginationResponseDto<SpaceTypeResponseDto> response = spaceTypeDtoMapper.toDto(pageResult);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
@@ -53,3 +74,4 @@ public class SpaceTypeController {
         return ResponseEntity.noContent().build();
     }
 }
+
