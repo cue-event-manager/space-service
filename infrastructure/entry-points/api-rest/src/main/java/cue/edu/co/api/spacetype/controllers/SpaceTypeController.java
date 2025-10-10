@@ -2,6 +2,7 @@ package cue.edu.co.api.spacetype.controllers;
 
 import cue.edu.co.api.common.dtos.PaginationRequestDto;
 import cue.edu.co.api.common.dtos.PaginationResponseDto;
+import cue.edu.co.api.spacetype.constants.SpaceTypeEndpoint;
 import cue.edu.co.api.spacetype.dtos.CreateSpaceTypeRequestDto;
 import cue.edu.co.api.spacetype.dtos.SpaceTypePaginationRequestDto;
 import cue.edu.co.api.spacetype.dtos.SpaceTypeResponseDto;
@@ -18,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/space-types")
+@RequestMapping(SpaceTypeEndpoint.SPACE_TYPE_BASE)
 @RequiredArgsConstructor
 public class SpaceTypeController {
     private final CreateSpaceTypeUseCase createSpaceTypeUseCase;
@@ -51,14 +52,14 @@ public class SpaceTypeController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(SpaceTypeEndpoint.SPACE_TYPE_BY_ID)
     public ResponseEntity<SpaceTypeResponseDto> getById(@PathVariable Long id) {
         GetSpaceTypeQuery query = new GetSpaceTypeQuery(id);
         SpaceType spaceType = getSpaceTypeUseCase.execute(query);
         return ResponseEntity.ok(spaceTypeDtoMapper.toDto(spaceType));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(SpaceTypeEndpoint.SPACE_TYPE_BY_ID)
     public ResponseEntity<SpaceTypeResponseDto> update(
             @PathVariable Long id,
             @Valid @RequestBody UpdateSpaceTypeRequestDto request) {
@@ -67,7 +68,7 @@ public class SpaceTypeController {
         return ResponseEntity.ok(spaceTypeDtoMapper.toDto(spaceType));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(SpaceTypeEndpoint.SPACE_TYPE_BY_ID)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         DeleteSpaceTypeCommand command = new DeleteSpaceTypeCommand(id);
         deleteSpaceTypeUseCase.execute(command);
