@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(SpaceResourceEndpoint.SPACE_RESOURCE_BASE)
 @RequiredArgsConstructor
 public class SpaceResourceController {
     private final CreateSpaceResourceUseCase createSpaceResourceUseCase;
@@ -29,7 +28,7 @@ public class SpaceResourceController {
     private final GetAllSpaceResourcesUseCase getAllSpaceResourcesUseCase;
     private final SpaceResourceDtoMapper spaceResourceDtoMapper;
 
-    @PostMapping
+    @PostMapping(SpaceResourceEndpoint.SPACE_RESOURCE_CREATE_ENDPOINT)
     public ResponseEntity<SpaceResourceResponseDto> create(@Valid @RequestBody CreateSpaceResourceRequestDto request) {
         CreateSpaceResourceCommand command = spaceResourceDtoMapper.toCommand(request);
         SpaceResource spaceResource = createSpaceResourceUseCase.execute(command);
@@ -37,7 +36,7 @@ public class SpaceResourceController {
                 .body(spaceResourceDtoMapper.toDto(spaceResource));
     }
 
-    @GetMapping
+    @GetMapping(SpaceResourceEndpoint.SPACE_RESOURCE_BASE)
     public ResponseEntity<PaginationResponseDto<SpaceResourceResponseDto>> getAll(
             @Valid SpaceResourcePaginationRequestDto requestDto,
             @Valid PaginationRequestDto paginationRequestDto
@@ -53,23 +52,23 @@ public class SpaceResourceController {
     }
 
     @GetMapping(SpaceResourceEndpoint.SPACE_RESOURCE_BY_ID)
-    public ResponseEntity<SpaceResourceResponseDto> getById(@PathVariable Long id) {
+    public ResponseEntity<SpaceResourceResponseDto> getById(@PathVariable(name = "id") Long id) {
         GetSpaceResourceQuery query = new GetSpaceResourceQuery(id);
         SpaceResource spaceResource = getSpaceResourceUseCase.execute(query);
         return ResponseEntity.ok(spaceResourceDtoMapper.toDto(spaceResource));
     }
 
-    @PutMapping(SpaceResourceEndpoint.SPACE_RESOURCE_BY_ID)
+    @PutMapping(SpaceResourceEndpoint.SPACE_RESOURCE_UPDATE_ENDPOINT)
     public ResponseEntity<SpaceResourceResponseDto> update(
-            @PathVariable Long id,
+            @PathVariable(name = "id") Long id,
             @Valid @RequestBody UpdateSpaceResourceRequestDto request) {
         UpdateSpaceResourceCommand command = spaceResourceDtoMapper.toCommand(id, request);
         SpaceResource spaceResource = updateSpaceResourceUseCase.execute(command);
         return ResponseEntity.ok(spaceResourceDtoMapper.toDto(spaceResource));
     }
 
-    @DeleteMapping(SpaceResourceEndpoint.SPACE_RESOURCE_BY_ID)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @DeleteMapping(SpaceResourceEndpoint.SPACE_RESOURCE_DELETE_ENDPOINT)
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) {
         DeleteSpaceResourceCommand command = new DeleteSpaceResourceCommand(id);
         deleteSpaceResourceUseCase.execute(command);
         return ResponseEntity.noContent().build();
