@@ -1,7 +1,7 @@
 package cue.edu.co.usecase.spacetype;
 
 import cue.edu.co.model.spacetype.SpaceType;
-import cue.edu.co.model.spacetype.UpdateSpaceTypeCommand;
+import cue.edu.co.model.spacetype.commands.UpdateSpaceTypeCommand;
 import cue.edu.co.model.spacetype.exceptions.DuplicateSpaceTypeNameException;
 import cue.edu.co.model.spacetype.exceptions.SpaceTypeNotFoundException;
 import cue.edu.co.model.spacetype.gateways.SpaceTypeRepository;
