@@ -1,5 +1,6 @@
-package cue.edu.co.model.spacetype;
+package cue.edu.co.model.spacetype.commands;
 
+import cue.edu.co.model.spacetype.SpaceType;
 import java.time.LocalDateTime;
 
 public record CreateSpaceTypeCommand(
