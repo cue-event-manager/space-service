@@ -6,6 +6,7 @@ CREATE TABLE space (
                        type_id BIGINT NOT NULL,
                        capacity INT,
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                       deleted boolean not null default false,
 
                        CONSTRAINT fk_space_campus FOREIGN KEY (campus_id) REFERENCES campus(id),
                        CONSTRAINT fk_space_status FOREIGN KEY (status_id) REFERENCES space_status(id),
