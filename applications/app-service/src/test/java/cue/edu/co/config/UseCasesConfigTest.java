@@ -1,6 +1,8 @@
 package cue.edu.co.config;
 
 import cue.edu.co.model.spacetype.gateways.SpaceTypeRepository;
+import cue.edu.co.model.spaceresource.gateways.SpaceResourceRepository;
+import cue.edu.co.model.spacestatus.gateways.SpaceStatusRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -29,12 +31,22 @@ public class UseCasesConfigTest {
     }
 
     @Configuration
-    @Import({UseCasesConfig.class, SpaceTypeUseCaseConfig.class})
+    @Import({UseCasesConfig.class, SpaceTypeUseCaseConfig.class, SpaceResourceUseCaseConfig.class, SpaceStatusUseCaseConfig.class})
     static class TestConfig {
 
         @Bean
         public SpaceTypeRepository spaceTypeRepository() {
             return mock(SpaceTypeRepository.class);
+        }
+
+        @Bean
+        public SpaceResourceRepository spaceResourceRepository() {
+            return mock(SpaceResourceRepository.class);
+        }
+
+        @Bean
+        public SpaceStatusRepository spaceStatusRepository() {
+            return mock(SpaceStatusRepository.class);
         }
 
         @Bean
