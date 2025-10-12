@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SoftDelete;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import static cue.edu.co.jpa.constants.TableConstant.SPACE_STATUS_TABLE;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SoftDelete
 @EntityListeners(AuditingEntityListener.class)
 public class SpaceStatusEntity {
 
