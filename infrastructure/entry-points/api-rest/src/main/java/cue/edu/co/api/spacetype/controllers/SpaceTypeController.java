@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(SpaceTypeEndpoint.SPACE_TYPE_BASE)
 @RequiredArgsConstructor
 public class SpaceTypeController {
     private final CreateSpaceTypeUseCase createSpaceTypeUseCase;
@@ -29,7 +28,7 @@ public class SpaceTypeController {
     private final GetAllSpaceTypesUseCase getAllSpaceTypesUseCase;
     private final SpaceTypeDtoMapper spaceTypeDtoMapper;
 
-    @PostMapping
+    @PostMapping(SpaceTypeEndpoint.SPACE_TYPE_CREATE_ENDPOINT)
     public ResponseEntity<SpaceTypeResponseDto> create(@Valid @RequestBody CreateSpaceTypeRequestDto request) {
         CreateSpaceTypeCommand command = spaceTypeDtoMapper.toCommand(request);
         SpaceType spaceType = createSpaceTypeUseCase.execute(command);
@@ -37,7 +36,7 @@ public class SpaceTypeController {
                 .body(spaceTypeDtoMapper.toDto(spaceType));
     }
 
-    @GetMapping
+    @GetMapping(SpaceTypeEndpoint.SPACE_TYPE_BASE)
     public ResponseEntity<PaginationResponseDto<SpaceTypeResponseDto>> getAll(
             @Valid SpaceTypePaginationRequestDto requestDto,
             @Valid PaginationRequestDto paginationRequestDto
@@ -59,17 +58,17 @@ public class SpaceTypeController {
         return ResponseEntity.ok(spaceTypeDtoMapper.toDto(spaceType));
     }
 
-    @PutMapping(SpaceTypeEndpoint.SPACE_TYPE_BY_ID)
+    @PutMapping(SpaceTypeEndpoint.SPACE_TYPE_UPDATE_ENDPOINT)
     public ResponseEntity<SpaceTypeResponseDto> update(
-            @PathVariable Long id,
+            @PathVariable(name = "id") Long id,
             @Valid @RequestBody UpdateSpaceTypeRequestDto request) {
         UpdateSpaceTypeCommand command = spaceTypeDtoMapper.toCommand(id, request);
         SpaceType spaceType = updateSpaceTypeUseCase.execute(command);
         return ResponseEntity.ok(spaceTypeDtoMapper.toDto(spaceType));
     }
 
-    @DeleteMapping(SpaceTypeEndpoint.SPACE_TYPE_BY_ID)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @DeleteMapping(SpaceTypeEndpoint.SPACE_TYPE_DELETE_ENDPOINT)
+    public ResponseEntity<Void> delete(@PathVariable(name = "id")  Long id) {
         DeleteSpaceTypeCommand command = new DeleteSpaceTypeCommand(id);
         deleteSpaceTypeUseCase.execute(command);
         return ResponseEntity.noContent().build();
