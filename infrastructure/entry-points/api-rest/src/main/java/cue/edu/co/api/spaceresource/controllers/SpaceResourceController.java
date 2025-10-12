@@ -9,7 +9,11 @@ import cue.edu.co.api.spaceresource.dtos.SpaceResourceResponseDto;
 import cue.edu.co.api.spaceresource.dtos.UpdateSpaceResourceRequestDto;
 import cue.edu.co.api.spaceresource.mappers.SpaceResourceDtoMapper;
 import cue.edu.co.model.common.results.PageResult;
-import cue.edu.co.model.spaceresource.*;
+import cue.edu.co.model.spaceresource.SpaceResource;
+import cue.edu.co.model.spaceresource.commands.CreateSpaceResourceCommand;
+import cue.edu.co.model.spaceresource.commands.DeleteSpaceResourceCommand;
+import cue.edu.co.model.spaceresource.commands.UpdateSpaceResourceCommand;
+import cue.edu.co.model.spaceresource.GetSpaceResourceQuery;
 import cue.edu.co.model.spaceresource.queries.SpaceResourcePaginationQuery;
 import cue.edu.co.usecase.spaceresource.*;
 import jakarta.validation.Valid;
@@ -52,7 +56,7 @@ public class SpaceResourceController {
     }
 
     @GetMapping(SpaceResourceEndpoint.SPACE_RESOURCE_BY_ID)
-    public ResponseEntity<SpaceResourceResponseDto> getById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<SpaceResourceResponseDto> getById(@PathVariable Long id) {
         GetSpaceResourceQuery query = new GetSpaceResourceQuery(id);
         SpaceResource spaceResource = getSpaceResourceUseCase.execute(query);
         return ResponseEntity.ok(spaceResourceDtoMapper.toDto(spaceResource));
