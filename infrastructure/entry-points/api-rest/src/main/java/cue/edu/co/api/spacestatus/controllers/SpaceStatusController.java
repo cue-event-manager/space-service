@@ -64,7 +64,7 @@ public class SpaceStatusController {
 
     @PutMapping(SpaceStatusEndpoint.SPACE_STATUS_UPDATE_ENDPOINT)
     public ResponseEntity<SpaceStatusResponseDto> update(
-            @PathVariable Long id,
+            @PathVariable(name = "id") Long id,
             @Valid @RequestBody UpdateSpaceStatusRequestDto request) {
         UpdateSpaceStatusCommand command = spaceStatusDtoMapper.toCommand(id, request);
         SpaceStatus spaceStatus = updateSpaceStatusUseCase.execute(command);
@@ -72,7 +72,7 @@ public class SpaceStatusController {
     }
 
     @DeleteMapping(SpaceStatusEndpoint.SPACE_STATUS_DELETE_ENDPOINT)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id")  Long id) {
         DeleteSpaceStatusCommand command = new DeleteSpaceStatusCommand(id);
         deleteSpaceStatusUseCase.execute(command);
         return ResponseEntity.noContent().build();
