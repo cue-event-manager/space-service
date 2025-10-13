@@ -1,6 +1,6 @@
 package cue.edu.co.usecase.spaceresource;
 
-import cue.edu.co.model.spaceresource.CreateSpaceResourceCommand;
+import cue.edu.co.model.spaceresource.commands.CreateSpaceResourceCommand;
 import cue.edu.co.model.spaceresource.SpaceResource;
 import cue.edu.co.model.spaceresource.exceptions.DuplicateSpaceResourceNameException;
 import cue.edu.co.model.spaceresource.gateways.SpaceResourceRepository;

@@ -1,6 +1,6 @@
 package cue.edu.co.usecase.spaceresource;
 
-import cue.edu.co.model.spaceresource.DeleteSpaceResourceCommand;
+import cue.edu.co.model.spaceresource.commands.DeleteSpaceResourceCommand;
 import cue.edu.co.model.spaceresource.exceptions.SpaceResourceNotFoundException;
 import cue.edu.co.model.spaceresource.gateways.SpaceResourceRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package cue.edu.co.usecase.spacetype;
 
-import cue.edu.co.model.spacetype.CreateSpaceTypeCommand;
+import cue.edu.co.model.spacetype.commands.CreateSpaceTypeCommand;
 import cue.edu.co.model.spacetype.SpaceType;
 import cue.edu.co.model.spacetype.exceptions.DuplicateSpaceTypeNameException;
 import cue.edu.co.model.spacetype.gateways.SpaceTypeRepository;

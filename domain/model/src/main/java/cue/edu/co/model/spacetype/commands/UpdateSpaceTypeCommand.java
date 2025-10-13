@@ -1,12 +1,14 @@
-package cue.edu.co.model.spaceresource;
+package cue.edu.co.model.spacetype.commands;
 
-public record UpdateSpaceResourceCommand(
+import cue.edu.co.model.spacetype.SpaceType;
+
+public record UpdateSpaceTypeCommand(
         Long id,
         String name,
         String description
 ) {
-    public SpaceResource toDomain(SpaceResource existing) {
-        return SpaceResource.builder()
+    public SpaceType toDomain(SpaceType existing) {
+        return SpaceType.builder()
                 .id(existing.getId())
                 .name(name)
                 .description(description)

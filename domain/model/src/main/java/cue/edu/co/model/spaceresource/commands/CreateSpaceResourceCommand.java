@@ -1,5 +1,6 @@
-package cue.edu.co.model.spaceresource;
+package cue.edu.co.model.spaceresource.commands;
 
+import cue.edu.co.model.spaceresource.SpaceResource;
 import java.time.LocalDateTime;
 
 public record CreateSpaceResourceCommand(
