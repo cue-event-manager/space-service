@@ -1,5 +1,7 @@
 package cue.edu.co.config;
 
+import cue.edu.co.model.campus.gateways.CampusRepository;
+import cue.edu.co.model.space.gateways.SpaceRepository;
 import cue.edu.co.model.spacetype.gateways.SpaceTypeRepository;
 import cue.edu.co.model.spaceresource.gateways.SpaceResourceRepository;
 import cue.edu.co.model.spacestatus.gateways.SpaceStatusRepository;
@@ -31,7 +33,7 @@ public class UseCasesConfigTest {
     }
 
     @Configuration
-    @Import({UseCasesConfig.class, SpaceTypeUseCaseConfig.class, SpaceResourceUseCaseConfig.class, SpaceStatusUseCaseConfig.class})
+    @Import({UseCasesConfig.class, SpaceTypeUseCaseConfig.class, SpaceResourceUseCaseConfig.class, SpaceStatusUseCaseConfig.class, SpaceUseCaseConfig.class})
     static class TestConfig {
 
         @Bean
@@ -47,6 +49,16 @@ public class UseCasesConfigTest {
         @Bean
         public SpaceStatusRepository spaceStatusRepository() {
             return mock(SpaceStatusRepository.class);
+        }
+
+        @Bean
+        public SpaceRepository spaceRepository() {
+            return mock(SpaceRepository.class);
+        }
+
+        @Bean
+        public CampusRepository campusRepository() {
+            return mock(CampusRepository.class);
         }
 
         @Bean
