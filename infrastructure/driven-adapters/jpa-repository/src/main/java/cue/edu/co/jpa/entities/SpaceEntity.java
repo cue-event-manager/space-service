@@ -2,18 +2,23 @@ package cue.edu.co.jpa.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SoftDelete;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 
 import static cue.edu.co.jpa.constants.TableConstant.SPACE_TABLE;
 
+@Data
 @Entity
+@SoftDelete
 @Table(name = SPACE_TABLE)
-@Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class SpaceEntity {
 
     @Id
@@ -47,5 +52,6 @@ public class SpaceEntity {
     private Set<SpaceResourceEntity> resources;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreatedDate
+    private LocalDateTime createdAt;
 }
