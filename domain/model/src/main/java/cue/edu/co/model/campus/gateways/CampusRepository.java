@@ -4,12 +4,15 @@ import cue.edu.co.model.campus.Campus;
 import cue.edu.co.model.campus.queries.CampusPaginationQuery;
 import cue.edu.co.model.common.results.PageResult;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CampusRepository {
     Campus save(Campus campus);
 
     Optional<Campus> findById(Long id);
+
+    List<Campus> findAll();
 
     PageResult<Campus> findAllByFilters(CampusPaginationQuery query);
 
