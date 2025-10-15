@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -35,6 +36,14 @@ public class SpaceStatusRepositoryAdapter implements SpaceStatusRepository {
     public Optional<SpaceStatus> findById(Long id) {
         return spaceStatusJpaRepository.findById(id)
                 .map(spaceStatusMapper::toDomain);
+    }
+
+    @Override
+    public List<SpaceStatus> findAll() {
+        return spaceStatusJpaRepository.findAll()
+                .stream()
+                .map(spaceStatusMapper::toDomain)
+                .toList();
     }
 
     @Override
