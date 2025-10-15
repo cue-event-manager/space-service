@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -35,6 +36,15 @@ public class CampusRepositoryAdapter implements CampusRepository {
     public Optional<Campus> findById(Long id) {
         return campusJpaRepository.findById(id)
                 .map(campusMapper::toDomain);
+    }
+
+    @Override
+    public List<Campus> findAll() {
+        return campusJpaRepository
+                .findAll()
+                .stream()
+                .map(campusMapper::toDomain)
+                .toList();
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,6 +30,15 @@ public class SpaceTypeRepositoryAdapter implements SpaceTypeRepository {
         SpaceTypeEntity entity = spaceTypeMapper.toEntity(spaceType);
         SpaceTypeEntity savedEntity = spaceTypeJpaRepository.save(entity);
         return spaceTypeMapper.toDomain(savedEntity);
+    }
+
+    @Override
+    public List<SpaceType> findAll() {
+        return spaceTypeJpaRepository
+                .findAll()
+                .stream()
+                .map(spaceTypeMapper::toDomain)
+                .toList();
     }
 
     @Override
