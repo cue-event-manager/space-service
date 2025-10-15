@@ -6,11 +6,17 @@ import cue.edu.co.model.spacetype.gateways.SpaceTypeRepository;
 import cue.edu.co.model.spacetype.queries.SpaceTypePaginationQuery;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class GetAllSpaceTypesUseCase {
     private final SpaceTypeRepository spaceTypeRepository;
 
     public PageResult<SpaceType> execute(SpaceTypePaginationQuery query) {
         return spaceTypeRepository.findAllByFilters(query);
+    }
+
+    public List<SpaceType> execute(){
+        return spaceTypeRepository.findAll();
     }
 }

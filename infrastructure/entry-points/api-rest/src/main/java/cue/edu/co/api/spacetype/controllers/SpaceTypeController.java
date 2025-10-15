@@ -22,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class SpaceTypeController {
@@ -53,6 +55,17 @@ public class SpaceTypeController {
         PaginationResponseDto<SpaceTypeResponseDto> response = spaceTypeDtoMapper.toDto(pageResult);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(SpaceTypeEndpoint.SPACE_TYPE_GET_ALL)
+    public ResponseEntity<List<SpaceTypeResponseDto>> getAll() {
+        List<SpaceTypeResponseDto> spaceTypes = getAllSpaceTypesUseCase
+                .execute()
+                .stream()
+                .map(spaceTypeDtoMapper::toDto)
+                .toList();
+
+        return ResponseEntity.ok(spaceTypes);
     }
 
     @GetMapping(SpaceTypeEndpoint.SPACE_TYPE_BY_ID)

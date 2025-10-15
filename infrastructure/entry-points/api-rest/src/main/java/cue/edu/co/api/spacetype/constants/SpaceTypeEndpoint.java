@@ -4,6 +4,7 @@ public class SpaceTypeEndpoint {
     private SpaceTypeEndpoint(){}
 
     public static final String SPACE_TYPE_BASE = "/api/space-types";
+    public static final String SPACE_TYPE_GET_ALL = SPACE_TYPE_BASE + "/all";
     public static final String SPACE_TYPE_CREATE_ENDPOINT = SPACE_TYPE_BASE + "/create";
     public static final String SPACE_TYPE_UPDATE_ENDPOINT = SPACE_TYPE_BASE + "/{id}/update";
     public static final String SPACE_TYPE_DELETE_ENDPOINT = SPACE_TYPE_BASE + "/{id}/delete";
