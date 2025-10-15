@@ -33,7 +33,7 @@ public class UseCasesConfigTest {
     }
 
     @Configuration
-    @Import({UseCasesConfig.class, SpaceTypeUseCaseConfig.class, SpaceResourceUseCaseConfig.class, SpaceStatusUseCaseConfig.class, SpaceUseCaseConfig.class})
+    @Import({UseCasesConfig.class, SpaceTypeUseCaseConfig.class, SpaceResourceUseCaseConfig.class, SpaceStatusUseCaseConfig.class, CampusUseCaseConfig.class, SpaceUseCaseConfig.class})
     static class TestConfig {
 
         @Bean

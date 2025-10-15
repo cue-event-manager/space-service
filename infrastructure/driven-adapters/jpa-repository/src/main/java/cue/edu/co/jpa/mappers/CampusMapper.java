@@ -6,8 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface CampusMapper {
-
-    CampusEntity toEntity(Campus campus);
-
     Campus toDomain(CampusEntity entity);
+
+    CampusEntity toEntity(Campus domain);
 }
