@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Campus {
     private Long id;
     private String name;
