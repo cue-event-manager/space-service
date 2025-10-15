@@ -57,7 +57,7 @@ public class SpaceStatusController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(SpaceStatusEndpoint.SPACE_STATUS_GET_ALL_ENDPOIN)
+    @GetMapping(SpaceStatusEndpoint.SPACE_STATUS_GET_ALL_ENDPOINT)
     public ResponseEntity<List<SpaceStatusResponseDto>> getAll() {
         List<SpaceStatusResponseDto> spaceStatuses = getAllSpaceStatusesUseCase
                 .execute()
