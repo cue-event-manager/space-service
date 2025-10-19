@@ -91,25 +91,6 @@ CORS_ALLOWED_ORIGINS=http://localhost:4200,http://localhost:3000
 
 ---
 
-## Key Endpoints
-
-| Method | Endpoint               | Description                             |
-| ------ | ---------------------- | --------------------------------------- |
-| GET    | `/api/spaces`          | Retrieve all registered spaces          |
-| POST   | `/api/spaces`          | Register a new space                    |
-| PUT    | `/api/spaces/{id}`     | Update an existing space                |
-| DELETE | `/api/spaces/{id}`     | Delete a space                          |
-| GET    | `/api/space-types`     | Retrieve all space types                |
-| POST   | `/api/space-types`     | Create a new space type                 |
-| GET    | `/api/space-statuses`  | Retrieve available space statuses       |
-| POST   | `/api/space-statuses`  | Create a new space status               |
-| GET    | `/api/space-resources` | Retrieve all resources                  |
-| POST   | `/api/space-resources` | Create a new resource                   |
-| GET    | `/api/campuses`        | Retrieve campuses with location details |
-| POST   | `/api/campuses`        | Register a new campus                   |
-
----
-
 ## Security
 
 * Uses **internal service authentication** via `INTERNAL_SECRET` for inter-service requests.
