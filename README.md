@@ -1,47 +1,124 @@
-# Proyecto Base Implementando Clean Architecture
+# Space Service
 
-## Antes de Iniciar
+## Overview
 
-Empezaremos por explicar los diferentes componentes del proyectos y partiremos de los componentes externos, continuando con los componentes core de negocio (dominio) y por último el inicio y configuración de la aplicación.
+The **Space Service** is responsible for managing physical spaces and related entities within the CUE Event Management System. It provides functionality for registering, updating, and querying spaces such as classrooms, auditoriums, and laboratories, as well as managing their types, statuses, resources, and associated campuses.
 
-Lee el artículo [Clean Architecture — Aislando los detalles](https://medium.com/bancolombia-tech/clean-architecture-aislando-los-detalles-4f9530f35d7a)
+---
 
-# Arquitectura
+## Purpose
 
-![Clean Architecture](https://miro.medium.com/max/1400/1*ZdlHz8B0-qu9Y-QO3AXR_w.png)
+This service centralizes all operations related to physical space management in the university. It ensures that the allocation, reservation, and availability of spaces are handled efficiently and consistently across events. It exposes endpoints to manage:
 
-## Domain
+* **Spaces** (rooms, auditoriums, laboratories, etc.)
+* **Space Types** (e.g., classroom, lab, meeting room)
+* **Space Statuses** (available, reserved, under maintenance)
+* **Space Resources** (e.g., projectors, sound systems, internet)
+* **Campuses** (university locations with their facilities)
 
-Es el módulo más interno de la arquitectura, pertenece a la capa del dominio y encapsula la lógica y reglas del negocio mediante modelos y entidades del dominio.
+It serves as a foundational component for event scheduling and logistics, ensuring that space allocation avoids conflicts and maximizes utilization.
 
-## Usecases
+---
 
-Este módulo gradle perteneciente a la capa del dominio, implementa los casos de uso del sistema, define lógica de aplicación y reacciona a las invocaciones desde el módulo de entry points, orquestando los flujos hacia el módulo de entities.
+## Versions
 
-## Infrastructure
+| Component                                   | Version |
+| ------------------------------------------- | ------- |
+| **Java**                                    | 17      |
+| **Spring Boot**                             | 3.5.4   |
+| **Gradle**                                  | 8.14.3  |
+| **Bancolombia Clean Architecture Scaffold** | 3.26.1  |
 
-### Helpers
+---
 
-En el apartado de helpers tendremos utilidades generales para los Driven Adapters y Entry Points.
+## Architecture
 
-Estas utilidades no están arraigadas a objetos concretos, se realiza el uso de generics para modelar comportamientos
-genéricos de los diferentes objetos de persistencia que puedan existir, este tipo de implementaciones se realizan
-basadas en el patrón de diseño [Unit of Work y Repository](https://medium.com/@krzychukosobudzki/repository-design-pattern-bc490b256006)
+The Space Service is implemented following the **Bancolombia Clean Architecture Scaffold**, ensuring separation of concerns, maintainability, and scalability.
 
-Estas clases no puede existir solas y debe heredarse su compartimiento en los **Driven Adapters**
+```
+space-service/
+├── applications/             # Application entry points and configurations
+├── domain/                   # Core entities, value objects, and use cases
+├── infrastructure/            # Adapters, repositories, mappers, and controllers
+├── build.gradle               # Gradle configuration
+└── settings.gradle            # Project settings
+```
 
-### Driven Adapters
+### Layers
 
-Los driven adapter representan implementaciones externas a nuestro sistema, como lo son conexiones a servicios rest,
-soap, bases de datos, lectura de archivos planos, y en concreto cualquier origen y fuente de datos con la que debamos
-interactuar.
+* **Domain:** Defines core entities such as `Space`, `SpaceType`, `SpaceStatus`, `SpaceResource`, and `Campus`.
+* **Use Cases:** Contains logic for creating, updating, and managing spaces and related entities.
+* **Infrastructure:** Implements persistence, mapping, and external communication.
+* **Entry Points:** Exposes REST APIs for external consumers like Event Service or Admin Panel.
 
-### Entry Points
+---
 
-Los entry points representan los puntos de entrada de la aplicación o el inicio de los flujos de negocio.
+## Environment Variables
 
-## Application
+The following environment variables are used by the Space Service:
 
-Este módulo es el más externo de la arquitectura, es el encargado de ensamblar los distintos módulos, resolver las dependencias y crear los beans de los casos de use (UseCases) de forma automática, inyectando en éstos instancias concretas de las dependencias declaradas. Además inicia la aplicación (es el único módulo del proyecto donde encontraremos la función “public static void main(String[] args)”.
+```bash
+# -----------------------------------
+# Server Configuration
+# -----------------------------------
+SERVER_PORT=8080
+SPRING_PROFILES_ACTIVE=dev
 
-**Los beans de los casos de uso se disponibilizan automaticamente gracias a un '@ComponentScan' ubicado en esta capa.**
+# -----------------------------------
+# Database Configuration
+# -----------------------------------
+DB_URL=jdbc:mysql://mysql-space:3306/space_service?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+DB_USERNAME=space_user
+DB_PASSWORD=space_password
+
+# -----------------------------------
+# Internal Communication
+# -----------------------------------
+INTERNAL_SECRET=your-internal-service-secret
+EUREKA_URL=http://discovery-service:8761/eureka/
+
+# -----------------------------------
+# Logging Configuration
+# -----------------------------------
+LOGGING_LEVEL_ROOT=INFO
+LOGGING_LEVEL_CO.EDU.CUE=DEBUG
+
+# -----------------------------------
+# CORS Configuration
+# -----------------------------------
+CORS_ALLOWED_ORIGINS=http://localhost:4200,http://localhost:3000
+```
+
+---
+
+## Key Endpoints
+
+| Method | Endpoint               | Description                             |
+| ------ | ---------------------- | --------------------------------------- |
+| GET    | `/api/spaces`          | Retrieve all registered spaces          |
+| POST   | `/api/spaces`          | Register a new space                    |
+| PUT    | `/api/spaces/{id}`     | Update an existing space                |
+| DELETE | `/api/spaces/{id}`     | Delete a space                          |
+| GET    | `/api/space-types`     | Retrieve all space types                |
+| POST   | `/api/space-types`     | Create a new space type                 |
+| GET    | `/api/space-statuses`  | Retrieve available space statuses       |
+| POST   | `/api/space-statuses`  | Create a new space status               |
+| GET    | `/api/space-resources` | Retrieve all resources                  |
+| POST   | `/api/space-resources` | Create a new resource                   |
+| GET    | `/api/campuses`        | Retrieve campuses with location details |
+| POST   | `/api/campuses`        | Register a new campus                   |
+
+---
+
+## Security
+
+* Uses **internal service authentication** via `INTERNAL_SECRET` for inter-service requests.
+* Integrated with **Auth Service** for user authentication and role validation.
+* **RBAC (Role-Based Access Control)** ensures only administrators can manage spaces and configurations.
+
+---
+
+## Related Services
+
+* **Event Service:** Uses the Space Service to check availability and reserve rooms for events.
+* **File Service:** Manages multimedia files or images of spaces and campuses.
