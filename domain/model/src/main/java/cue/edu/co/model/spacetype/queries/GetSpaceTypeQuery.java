@@ -1,4 +1,4 @@
-package cue.edu.co.model.spacetype;
+package cue.edu.co.model.spacetype.queries;
 
 public record GetSpaceTypeQuery(
         Long id

@@ -12,6 +12,8 @@ public interface CampusRepository {
 
     Optional<Campus> findById(Long id);
 
+    Optional<Campus> findByName(String name);
+
     List<Campus> findAll();
 
     PageResult<Campus> findAllByFilters(CampusPaginationQuery query);

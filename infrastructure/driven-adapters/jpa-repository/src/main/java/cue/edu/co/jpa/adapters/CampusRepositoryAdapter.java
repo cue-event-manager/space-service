@@ -39,6 +39,13 @@ public class CampusRepositoryAdapter implements CampusRepository {
     }
 
     @Override
+    public Optional<Campus> findByName(String name) {
+        return campusJpaRepository
+                .findByName(name)
+                .map(campusMapper::toDomain);
+    }
+
+    @Override
     public List<Campus> findAll() {
         return campusJpaRepository
                 .findAll()

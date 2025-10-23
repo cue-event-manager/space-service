@@ -9,7 +9,7 @@ import cue.edu.co.api.space.dtos.SpaceResponseDto;
 import cue.edu.co.api.space.dtos.UpdateSpaceRequestDto;
 import cue.edu.co.api.space.mappers.SpaceDtoMapper;
 import cue.edu.co.model.common.results.PageResult;
-import cue.edu.co.model.space.GetSpaceQuery;
+import cue.edu.co.model.space.queries.GetSpaceQuery;
 import cue.edu.co.model.space.Space;
 import cue.edu.co.model.space.commands.CreateSpaceCommand;
 import cue.edu.co.model.space.commands.DeleteSpaceCommand;

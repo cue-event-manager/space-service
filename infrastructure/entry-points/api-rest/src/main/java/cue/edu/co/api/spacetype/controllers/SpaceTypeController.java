@@ -13,7 +13,7 @@ import cue.edu.co.model.spacetype.SpaceType;
 import cue.edu.co.model.spacetype.commands.CreateSpaceTypeCommand;
 import cue.edu.co.model.spacetype.commands.DeleteSpaceTypeCommand;
 import cue.edu.co.model.spacetype.commands.UpdateSpaceTypeCommand;
-import cue.edu.co.model.spacetype.GetSpaceTypeQuery;
+import cue.edu.co.model.spacetype.queries.GetSpaceTypeQuery;
 import cue.edu.co.model.spacetype.queries.SpaceTypePaginationQuery;
 import cue.edu.co.usecase.spacetype.*;
 import jakarta.validation.Valid;

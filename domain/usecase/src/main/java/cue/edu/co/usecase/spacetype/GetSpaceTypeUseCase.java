@@ -1,6 +1,6 @@
 package cue.edu.co.usecase.spacetype;
 
-import cue.edu.co.model.spacetype.GetSpaceTypeQuery;
+import cue.edu.co.model.spacetype.queries.GetSpaceTypeQuery;
 import cue.edu.co.model.spacetype.SpaceType;
 import cue.edu.co.model.spacetype.exceptions.SpaceTypeNotFoundException;
 import cue.edu.co.model.spacetype.gateways.SpaceTypeRepository;

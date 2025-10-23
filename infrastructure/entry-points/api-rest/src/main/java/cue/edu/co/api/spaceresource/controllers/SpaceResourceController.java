@@ -13,7 +13,7 @@ import cue.edu.co.model.spaceresource.SpaceResource;
 import cue.edu.co.model.spaceresource.commands.CreateSpaceResourceCommand;
 import cue.edu.co.model.spaceresource.commands.DeleteSpaceResourceCommand;
 import cue.edu.co.model.spaceresource.commands.UpdateSpaceResourceCommand;
-import cue.edu.co.model.spaceresource.GetSpaceResourceQuery;
+import cue.edu.co.model.spaceresource.queries.GetSpaceResourceQuery;
 import cue.edu.co.model.spaceresource.queries.SpaceResourcePaginationQuery;
 import cue.edu.co.usecase.spaceresource.*;
 import jakarta.validation.Valid;
