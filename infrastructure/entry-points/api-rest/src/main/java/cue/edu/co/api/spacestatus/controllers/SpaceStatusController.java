@@ -9,7 +9,7 @@ import cue.edu.co.api.spacestatus.dtos.SpaceStatusResponseDto;
 import cue.edu.co.api.spacestatus.dtos.UpdateSpaceStatusRequestDto;
 import cue.edu.co.api.spacestatus.mappers.SpaceStatusDtoMapper;
 import cue.edu.co.model.common.results.PageResult;
-import cue.edu.co.model.spacestatus.GetSpaceStatusQuery;
+import cue.edu.co.model.spacestatus.queries.GetSpaceStatusQuery;
 import cue.edu.co.model.spacestatus.SpaceStatus;
 import cue.edu.co.model.spacestatus.commands.CreateSpaceStatusCommand;
 import cue.edu.co.model.spacestatus.commands.DeleteSpaceStatusCommand;

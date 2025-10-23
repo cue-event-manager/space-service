@@ -9,7 +9,7 @@ import cue.edu.co.api.campus.mappers.CampusDtoMapper;
 import cue.edu.co.api.common.dtos.PaginationRequestDto;
 import cue.edu.co.api.common.dtos.PaginationResponseDto;
 import cue.edu.co.model.campus.Campus;
-import cue.edu.co.model.campus.GetCampusQuery;
+import cue.edu.co.model.campus.queries.GetCampusQuery;
 import cue.edu.co.model.campus.commands.CreateCampusCommand;
 import cue.edu.co.model.campus.commands.DeleteCampusCommand;
 import cue.edu.co.model.campus.commands.UpdateCampusCommand;

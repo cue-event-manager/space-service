@@ -1,6 +1,6 @@
 package cue.edu.co.usecase.spacestatus;
 
-import cue.edu.co.model.spacestatus.GetSpaceStatusQuery;
+import cue.edu.co.model.spacestatus.queries.GetSpaceStatusQuery;
 import cue.edu.co.model.spacestatus.SpaceStatus;
 import cue.edu.co.model.spacestatus.exceptions.SpaceStatusNotFoundException;
 import cue.edu.co.model.spacestatus.gateways.SpaceStatusRepository;
