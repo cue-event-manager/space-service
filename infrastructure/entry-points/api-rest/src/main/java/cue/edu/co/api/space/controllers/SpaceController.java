@@ -3,10 +3,7 @@ package cue.edu.co.api.space.controllers;
 import cue.edu.co.api.common.dtos.PaginationRequestDto;
 import cue.edu.co.api.common.dtos.PaginationResponseDto;
 import cue.edu.co.api.space.constants.SpaceEndpoint;
-import cue.edu.co.api.space.dtos.CreateSpaceRequestDto;
-import cue.edu.co.api.space.dtos.SpacePaginationRequestDto;
-import cue.edu.co.api.space.dtos.SpaceResponseDto;
-import cue.edu.co.api.space.dtos.UpdateSpaceRequestDto;
+import cue.edu.co.api.space.dtos.*;
 import cue.edu.co.api.space.mappers.SpaceDtoMapper;
 import cue.edu.co.model.common.results.PageResult;
 import cue.edu.co.model.space.queries.GetSpaceQuery;
@@ -15,7 +12,12 @@ import cue.edu.co.model.space.commands.CreateSpaceCommand;
 import cue.edu.co.model.space.commands.DeleteSpaceCommand;
 import cue.edu.co.model.space.commands.UpdateSpaceCommand;
 import cue.edu.co.model.space.queries.SpacePaginationQuery;
+import cue.edu.co.model.spacereservation.SpaceReservation;
+import cue.edu.co.model.spacereservation.commands.ReserveSpaceCommand;
+import cue.edu.co.model.spacereservation.commands.ValidateSpaceAvailabilityCommand;
 import cue.edu.co.usecase.space.*;
+import cue.edu.co.usecase.spacereservation.ReserveSpaceUseCase;
+import cue.edu.co.usecase.spacereservation.ValidateSpaceAvailabilityUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,9 @@ public class SpaceController {
     private final DeleteSpaceUseCase deleteSpaceUseCase;
     private final GetSpaceUseCase getSpaceUseCase;
     private final GetAllSpacesUseCase getAllSpacesUseCase;
+    private final ValidateSpaceAvailabilityUseCase validateSpaceAvailabilityUseCase;
+    private final ReserveSpaceUseCase reserveSpaceUseCase;
+
     private final SpaceDtoMapper spaceDtoMapper;
 
     @PostMapping(SpaceEndpoint.SPACE_CREATE_ENDPOINT)
@@ -75,5 +80,26 @@ public class SpaceController {
         DeleteSpaceCommand command = new DeleteSpaceCommand(id);
         deleteSpaceUseCase.execute(command);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(SpaceEndpoint.SPACE_AVAILABILITY)
+    public ResponseEntity<ValidateSpaceAvailabilityResponseDto> validateAvailability(
+            @PathVariable("id") Long spaceId,
+            @Valid ValidateSpaceAvailabilityRequestDto request
+    ) {
+        ValidateSpaceAvailabilityCommand command = spaceDtoMapper.toCommand(spaceId, request);
+        boolean available = validateSpaceAvailabilityUseCase.execute(command);
+        return ResponseEntity.ok(new ValidateSpaceAvailabilityResponseDto(available));
+    }
+
+    @PostMapping(SpaceEndpoint.SPACE_RESERVE)
+    public ResponseEntity<ReserveSpaceResponseDto> reserveSpace(
+            @PathVariable("id")  Long spaceId,
+            @Valid @RequestBody ReserveSpaceRequestDto request
+    ) {
+        ReserveSpaceCommand command = spaceDtoMapper.toCommand(spaceId, request);
+        SpaceReservation reservation = reserveSpaceUseCase.execute(command);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(spaceDtoMapper.toDto(reservation));
     }
 }

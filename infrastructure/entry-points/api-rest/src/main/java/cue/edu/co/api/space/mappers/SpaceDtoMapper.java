@@ -4,15 +4,15 @@ import cue.edu.co.api.common.dtos.PaginationRequestDto;
 import cue.edu.co.api.common.dtos.PaginationResponseDto;
 import cue.edu.co.api.common.mappers.OptionalMapper;
 import cue.edu.co.api.common.mappers.PaginationDtoMapper;
-import cue.edu.co.api.space.dtos.CreateSpaceRequestDto;
-import cue.edu.co.api.space.dtos.SpacePaginationRequestDto;
-import cue.edu.co.api.space.dtos.SpaceResponseDto;
-import cue.edu.co.api.space.dtos.UpdateSpaceRequestDto;
+import cue.edu.co.api.space.dtos.*;
 import cue.edu.co.model.common.results.PageResult;
 import cue.edu.co.model.space.Space;
 import cue.edu.co.model.space.commands.CreateSpaceCommand;
 import cue.edu.co.model.space.commands.UpdateSpaceCommand;
 import cue.edu.co.model.space.queries.SpacePaginationQuery;
+import cue.edu.co.model.spacereservation.SpaceReservation;
+import cue.edu.co.model.spacereservation.commands.ReserveSpaceCommand;
+import cue.edu.co.model.spacereservation.commands.ValidateSpaceAvailabilityCommand;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -36,4 +36,15 @@ public interface SpaceDtoMapper {
     SpacePaginationQuery toQuery(SpacePaginationRequestDto spacePaginationRequestDto, PaginationRequestDto paginationRequestDto);
 
     PaginationResponseDto<SpaceResponseDto> toDto(PageResult<Space> pageResult);
+
+    @Mapping(target = "spaceId", source = "spaceId")
+    ValidateSpaceAvailabilityCommand toCommand(Long spaceId, ValidateSpaceAvailabilityRequestDto dto);
+
+
+    @Mapping(target = "spaceId", source = "spaceId")
+    ReserveSpaceCommand toCommand(Long spaceId, ReserveSpaceRequestDto dto);
+
+    @Mapping(target = "reservationId", source = "id")
+    @Mapping(target = "spaceId", source = "space.id")
+    ReserveSpaceResponseDto toDto(SpaceReservation reservation);
 }

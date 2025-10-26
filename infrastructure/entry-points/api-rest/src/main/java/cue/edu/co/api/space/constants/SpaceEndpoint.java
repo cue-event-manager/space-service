@@ -9,4 +9,6 @@ public class SpaceEndpoint {
     public static final String SPACE_UPDATE_ENDPOINT = SPACE_BASE + "/{id}/update";
     public static final String SPACE_DELETE_ENDPOINT = SPACE_BASE + "/{id}/delete";
     public static final String SPACE_BY_ID = SPACE_BASE + "/{id}";
+    public static final String SPACE_AVAILABILITY =  SPACE_BASE + "/{id}/availability";
+    public static final String SPACE_RESERVE = SPACE_BASE + "/{id}/reserve";
 }
