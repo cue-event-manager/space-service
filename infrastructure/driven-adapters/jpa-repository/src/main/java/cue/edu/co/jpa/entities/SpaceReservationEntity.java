@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import static cue.edu.co.jpa.constants.TableConstant.SPACE_RESERVATION_TABLE;
 @AllArgsConstructor
 @Entity
 @Table(name = SPACE_RESERVATION_TABLE)
+@EntityListeners(AuditingEntityListener.class)
 public class SpaceReservationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +29,7 @@ public class SpaceReservationEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "space_id", nullable = false)
     private SpaceEntity space;
+    private Long eventId;
 
     private LocalDate date;
     private LocalTime startTime;
