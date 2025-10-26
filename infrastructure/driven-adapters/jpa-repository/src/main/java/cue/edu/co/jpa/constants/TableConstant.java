@@ -8,4 +8,5 @@ public class TableConstant {
     public static final String SPACE_RESOURCE_TABLE = "space_resource";
     public static final String SPACE_TYPE_TABLE = "space_type";
     public static final String SPACE_STATUS_TABLE = "space_status";
+    public static final String SPACE_RESERVATION_TABLE = "space_reservation";
 }
