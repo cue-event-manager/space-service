@@ -9,6 +9,7 @@ import cue.edu.co.model.common.results.PageResult;
 import cue.edu.co.model.space.Space;
 import cue.edu.co.model.space.gateways.SpaceRepository;
 import cue.edu.co.model.space.queries.SpacePaginationQuery;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +35,7 @@ public class SpaceRepositoryAdapter implements SpaceRepository {
     }
 
     @Override
+    @Transactional
     public Optional<Space> findById(Long id) {
         return spaceJpaRepository.findById(id)
                 .map(spaceMapper::toDomain);

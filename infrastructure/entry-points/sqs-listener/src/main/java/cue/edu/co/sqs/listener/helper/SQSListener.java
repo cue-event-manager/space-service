@@ -1,0 +1,92 @@
+package cue.edu.co.sqs.listener.helper;
+
+import cue.edu.co.sqs.listener.config.SQSProperties;
+import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.Timer;
+import lombok.Builder;
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
+import software.amazon.awssdk.services.sqs.SqsAsyncClient;
+import software.amazon.awssdk.services.sqs.model.DeleteMessageRequest;
+import software.amazon.awssdk.services.sqs.model.Message;
+import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
+import software.amazon.awssdk.services.sqs.model.ReceiveMessageResponse;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+
+@Log4j2
+@Builder
+public class SQSListener implements Runnable {
+    private final SqsAsyncClient client;
+    private final SQSProperties properties;
+    private final Consumer<Message> consumer;
+    private Timer timer;
+
+    public SQSListener start() {
+        this.timer = Metrics.timer("async_operation_flow_duration",
+                "operation", "MessageFrom:" + properties.queueUrl(), "type", "", "status", "");
+        ExecutorService service = Executors.newFixedThreadPool(properties.numberOfThreads());
+        for (var i = 0; i < properties.numberOfThreads(); i++) {
+            service.submit(this);
+        }
+        return this;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                listen();
+            } catch (Exception e) {
+                log.warn("Error from SQS", e);
+            }
+        }
+    }
+
+    private void listen() throws ExecutionException, InterruptedException {
+        ReceiveMessageResponse response = getMessages();
+        log.debug("Processing {} messages", response.messages().size());
+        response.messages()
+                .stream()
+                .parallel()
+                .map(this::process)
+                .forEach(this::confirm);
+    }
+
+    private Message process(Message message) {
+        timer.record(() -> consumer.accept(message));
+        return message;
+    }
+
+    @SneakyThrows
+    private void confirm(Message message) {
+        DeleteMessageRequest request = getDeleteMessageRequest(message.receiptHandle());
+        client.deleteMessage(request).get();
+        log.debug("Message confirmed {}", message.messageId());
+    }
+
+    private ReceiveMessageResponse getMessages() throws ExecutionException, InterruptedException {
+        ReceiveMessageRequest request = getReceiveMessageRequest();
+        return client.receiveMessage(request).get();
+    }
+
+    private ReceiveMessageRequest getReceiveMessageRequest() {
+        return ReceiveMessageRequest.builder()
+                .queueUrl(properties.queueUrl())
+                .maxNumberOfMessages(properties.maxNumberOfMessages())
+                .waitTimeSeconds(properties.waitTimeSeconds())
+                .visibilityTimeout(properties.visibilityTimeoutSeconds())
+                .build();
+    }
+
+    private DeleteMessageRequest getDeleteMessageRequest(String receiptHandle) {
+        return DeleteMessageRequest.builder()
+                .queueUrl(properties.queueUrl())
+                .receiptHandle(receiptHandle)
+                .build();
+    }
+
+}
