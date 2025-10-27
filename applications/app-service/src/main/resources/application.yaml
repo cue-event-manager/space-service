@@ -45,3 +45,11 @@ eureka:
       defaultZone: "${EUREKA_URL:http://localhost:8761/eureka}"
   instance:
     preferIpAddress: true
+entrypoint:
+  sqs:
+    region: ${AWS_REGION:us-east-1}
+    queueUrl: ${QUEUE_URL}
+    waitTimeSeconds: 20
+    maxNumberOfMessages: 10
+    visibilityTimeoutSeconds: 30
+    numberOfThreads: 1
