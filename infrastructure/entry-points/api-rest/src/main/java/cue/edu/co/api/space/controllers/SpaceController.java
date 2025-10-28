@@ -60,7 +60,7 @@ public class SpaceController {
     }
 
     @GetMapping(SpaceEndpoint.SPACE_BY_ID)
-    public ResponseEntity<SpaceResponseDto> getById(@PathVariable Long id) {
+    public ResponseEntity<SpaceResponseDto> getById(@PathVariable(name = "id")  Long id) {
         GetSpaceQuery query = new GetSpaceQuery(id);
         Space space = getSpaceUseCase.execute(query);
         return ResponseEntity.ok(spaceDtoMapper.toDto(space));
