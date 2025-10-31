@@ -24,6 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class SpaceController {
@@ -57,6 +59,13 @@ public class SpaceController {
         PaginationResponseDto<SpaceResponseDto> response = spaceDtoMapper.toDto(pageResult);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(SpaceEndpoint.SPACE_AVAILABLE)
+    public  ResponseEntity<List<ResponseEntity>> getAvailableSpaces(
+            @Valid
+    ){
+
     }
 
     @GetMapping(SpaceEndpoint.SPACE_BY_ID)

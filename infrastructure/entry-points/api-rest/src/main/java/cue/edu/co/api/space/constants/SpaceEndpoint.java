@@ -11,4 +11,6 @@ public class SpaceEndpoint {
     public static final String SPACE_BY_ID = SPACE_BASE + "/{id}";
     public static final String SPACE_AVAILABILITY =  SPACE_BASE + "/{id}/availability";
     public static final String SPACE_RESERVE = SPACE_BASE + "/{id}/reserve";
+    public static final String SPACE_AVAILABLE = SPACE_BASE + "/available";
+
 }
