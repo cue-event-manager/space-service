@@ -9,6 +9,7 @@ import cue.edu.co.model.common.results.PageResult;
 import cue.edu.co.model.space.Space;
 import cue.edu.co.model.space.commands.CreateSpaceCommand;
 import cue.edu.co.model.space.commands.UpdateSpaceCommand;
+import cue.edu.co.model.space.queries.GetAvailableSpacesQuery;
 import cue.edu.co.model.space.queries.SpacePaginationQuery;
 import cue.edu.co.model.spacereservation.SpaceReservation;
 import cue.edu.co.model.spacereservation.commands.ReserveSpaceCommand;
@@ -47,4 +48,6 @@ public interface SpaceDtoMapper {
     @Mapping(target = "reservationId", source = "id")
     @Mapping(target = "spaceId", source = "space.id")
     ReserveSpaceResponseDto toDto(SpaceReservation reservation);
+
+    GetAvailableSpacesQuery toQuery(GetAvailableSpacesRequestDto availableSpacesRequestDto);
 }

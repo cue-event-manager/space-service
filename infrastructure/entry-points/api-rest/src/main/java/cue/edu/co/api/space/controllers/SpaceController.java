@@ -36,6 +36,7 @@ public class SpaceController {
     private final GetAllSpacesUseCase getAllSpacesUseCase;
     private final ValidateSpaceAvailabilityUseCase validateSpaceAvailabilityUseCase;
     private final ReserveSpaceUseCase reserveSpaceUseCase;
+    private final GetAvailableSpacesUseCase getAvailableSpacesUseCase;
 
     private final SpaceDtoMapper spaceDtoMapper;
 
@@ -62,10 +63,14 @@ public class SpaceController {
     }
 
     @GetMapping(SpaceEndpoint.SPACE_AVAILABLE)
-    public  ResponseEntity<List<ResponseEntity>> getAvailableSpaces(
-            @Valid
+    public  ResponseEntity<List<SpaceResponseDto>> getAvailableSpaces(
+            @Valid GetAvailableSpacesRequestDto availableSpacesRequestDto
     ){
+        List<Space> spaces = getAvailableSpacesUseCase.execute(spaceDtoMapper.toQuery(availableSpacesRequestDto));
 
+        return ResponseEntity.ok(
+                spaces.stream().map(spaceDtoMapper::toDto).toList()
+        );
     }
 
     @GetMapping(SpaceEndpoint.SPACE_BY_ID)
