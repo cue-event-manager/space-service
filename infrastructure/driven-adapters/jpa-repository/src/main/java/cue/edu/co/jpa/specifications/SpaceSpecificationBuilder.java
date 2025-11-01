@@ -1,6 +1,5 @@
 package cue.edu.co.jpa.specifications;
 
-import cue.edu.co.jpa.constants.SpaceColumn;
 import cue.edu.co.jpa.entities.SpaceEntity;
 import cue.edu.co.model.space.queries.SpacePaginationQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
