@@ -1,19 +1,22 @@
 package cue.edu.co.api.space.dtos;
 
 import cue.edu.co.api.space.constants.SpaceValidation;
+import cue.edu.co.model.event.enums.RecurrenceType;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 public record AvailableSpacesRequestDto(
-        @NotNull(message = SpaceValidation.DATE_REQUIRED)
+        Integer minCapacity,
         LocalDate date,
-
-        @NotNull(message = SpaceValidation.START_TIME_REQUIRED)
+        LocalDate startDate,
+        LocalDate endDate,
         LocalTime startTime,
-
-        @NotNull(message = SpaceValidation.END_TIME_REQUIRED)
-        LocalTime endTime
+        LocalTime endTime,
+        RecurrenceType recurrenceType,
+        Long campusId,
+        Long typeId
 ) {
 }
