@@ -2,6 +2,7 @@ package cue.edu.co.config;
 
 import cue.edu.co.model.campus.gateways.CampusRepository;
 import cue.edu.co.model.space.gateways.SpaceRepository;
+import cue.edu.co.model.spaceresource.SpaceResource;
 import cue.edu.co.model.spaceresource.gateways.SpaceResourceRepository;
 import cue.edu.co.model.spacestatus.gateways.SpaceStatusRepository;
 import cue.edu.co.model.spacetype.gateways.SpaceTypeRepository;
@@ -57,5 +58,10 @@ public class SpaceUseCaseConfig {
     @Bean
     public GetAllSpacesUseCase getAllSpacesUseCase(SpaceRepository spaceRepository) {
         return new GetAllSpacesUseCase(spaceRepository);
+    }
+
+    @Bean
+    public GetAvailableSpacesUseCase getAvailableSpacesUseCase(SpaceRepository spaceRepository){
+        return new GetAvailableSpacesUseCase(spaceRepository);
     }
 }

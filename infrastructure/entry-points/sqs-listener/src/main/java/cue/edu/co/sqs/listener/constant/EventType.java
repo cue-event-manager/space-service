@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum EventType {
-    SINGLE_EVENT_CREATED("SingleEventCreated");
+    SINGLE_EVENT_CREATED("SingleEventCreated"),
+    RECURRENT_EVENT_CREATED("RecurrentEventCreated");
+
     private final String type;
 }

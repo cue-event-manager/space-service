@@ -4,6 +4,7 @@ import cue.edu.co.jpa.mappers.SpaceReservationMapper;
 import cue.edu.co.jpa.repositories.SpaceReservationJpaRepository;
 import cue.edu.co.model.spacereservation.SpaceReservation;
 import cue.edu.co.model.spacereservation.gateways.SpaceReservationRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,7 @@ public class SpaceReservationRepositoryAdapter implements SpaceReservationReposi
     private final SpaceReservationJpaRepository spaceReservationJpaRepository;
     private final SpaceReservationMapper spaceReservationMapper;
 
+    @Transactional
     @Override
     public SpaceReservation save(SpaceReservation spaceReservation) {
         return spaceReservationMapper.toDomain(

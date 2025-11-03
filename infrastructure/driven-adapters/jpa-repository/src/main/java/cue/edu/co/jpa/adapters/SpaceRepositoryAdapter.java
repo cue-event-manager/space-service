@@ -4,11 +4,13 @@ import cue.edu.co.jpa.entities.SpaceEntity;
 import cue.edu.co.jpa.mappers.PaginationMapper;
 import cue.edu.co.jpa.mappers.SpaceMapper;
 import cue.edu.co.jpa.repositories.SpaceJpaRepository;
+import cue.edu.co.jpa.specifications.GetAllSpacesSpecificationBuilder;
 import cue.edu.co.jpa.specifications.SpaceAvailabilitySpecificationBuilder;
 import cue.edu.co.jpa.specifications.SpaceSpecificationBuilder;
 import cue.edu.co.model.common.results.PageResult;
 import cue.edu.co.model.space.Space;
 import cue.edu.co.model.space.gateways.SpaceRepository;
+import cue.edu.co.model.space.queries.GetAllSpacesQuery;
 import cue.edu.co.model.space.queries.GetAvailableSpacesQuery;
 import cue.edu.co.model.space.queries.SpacePaginationQuery;
 import jakarta.transaction.Transactional;
@@ -81,6 +83,17 @@ public class SpaceRepositoryAdapter implements SpaceRepository {
         Specification<SpaceEntity> specification = SpaceAvailabilitySpecificationBuilder.build(query);
         List<SpaceEntity> entities = spaceJpaRepository.findAll(specification);
         return entities.stream().map(spaceMapper::toDomain).toList();
+    }
+
+    @Override
+    public List<Space> findAll(GetAllSpacesQuery getAllSpacesQuery) {
+        Specification<SpaceEntity> specification = GetAllSpacesSpecificationBuilder.build(getAllSpacesQuery);
+
+        return spaceJpaRepository
+                .findAll(specification)
+                .stream()
+                .map(spaceMapper::toDomain)
+                .toList();
     }
 
 }
