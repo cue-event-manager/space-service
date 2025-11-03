@@ -9,11 +9,13 @@ import cue.edu.co.model.common.results.PageResult;
 import cue.edu.co.model.space.Space;
 import cue.edu.co.model.space.commands.CreateSpaceCommand;
 import cue.edu.co.model.space.commands.UpdateSpaceCommand;
+import cue.edu.co.model.space.queries.GetAllSpacesQuery;
 import cue.edu.co.model.space.queries.GetAvailableSpacesQuery;
 import cue.edu.co.model.space.queries.SpacePaginationQuery;
 import cue.edu.co.model.spacereservation.SpaceReservation;
 import cue.edu.co.model.spacereservation.commands.ReserveSpaceCommand;
 import cue.edu.co.model.spacereservation.commands.ValidateSpaceAvailabilityCommand;
+import jakarta.validation.Valid;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -50,4 +52,6 @@ public interface SpaceDtoMapper {
     ReserveSpaceResponseDto toDto(SpaceReservation reservation);
 
     GetAvailableSpacesQuery toQuery(GetAvailableSpacesRequestDto availableSpacesRequestDto);
+
+    GetAllSpacesQuery toQuery(SpacePaginationRequestDto requestDto);
 }

@@ -6,6 +6,7 @@ import cue.edu.co.api.space.constants.SpaceEndpoint;
 import cue.edu.co.api.space.dtos.*;
 import cue.edu.co.api.space.mappers.SpaceDtoMapper;
 import cue.edu.co.model.common.results.PageResult;
+import cue.edu.co.model.space.queries.GetAllSpacesQuery;
 import cue.edu.co.model.space.queries.GetSpaceQuery;
 import cue.edu.co.model.space.Space;
 import cue.edu.co.model.space.commands.CreateSpaceCommand;
@@ -60,6 +61,21 @@ public class SpaceController {
         PaginationResponseDto<SpaceResponseDto> response = spaceDtoMapper.toDto(pageResult);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(SpaceEndpoint.SPACE_GET_ALL)
+    public ResponseEntity<List<SpaceResponseDto>> getAll(
+            @Valid SpacePaginationRequestDto requestDto
+    ) {
+        GetAllSpacesQuery getAllSpacesQuery = spaceDtoMapper.toQuery(requestDto);
+
+        List<SpaceResponseDto> spaces = getAllSpacesUseCase
+                .execute(getAllSpacesQuery)
+                .stream()
+                .map(spaceDtoMapper::toDto)
+                .toList();
+
+        return ResponseEntity.ok(spaces);
     }
 
     @GetMapping(SpaceEndpoint.SPACE_AVAILABLE)
