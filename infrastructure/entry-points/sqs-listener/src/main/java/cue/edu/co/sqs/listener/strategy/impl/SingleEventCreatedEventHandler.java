@@ -25,15 +25,17 @@ public class SingleEventCreatedEventHandler implements EventHandler {
     public void handle(Event event) {
         SingleEventCreatedPayload singleEventCreatedPayload = objectMapper
                 .convertValue(event.getPayload(), SingleEventCreatedPayload.class);
+        if(singleEventCreatedPayload.spaceId() != null){
+            reserveSpaceUseCase.execute(
+                    new ReserveSpaceCommand(
+                            singleEventCreatedPayload.spaceId(),
+                            singleEventCreatedPayload.eventId(),
+                            singleEventCreatedPayload.date(),
+                            singleEventCreatedPayload.startTime(),
+                            singleEventCreatedPayload.endTime()
+                    )
+            );
+        }
 
-        reserveSpaceUseCase.execute(
-                new ReserveSpaceCommand(
-                        singleEventCreatedPayload.spaceId(),
-                        singleEventCreatedPayload.eventId(),
-                        singleEventCreatedPayload.date(),
-                        singleEventCreatedPayload.startTime(),
-                        singleEventCreatedPayload.endTime()
-                )
-        );
     }
 }

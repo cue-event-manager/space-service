@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,13 @@ public class RecurrentEventCreatedEventHandler implements EventHandler {
         RecurrentEventCreatedPayload recurrentEventCreatedPayload = objectMapper
                 .convertValue(event.getPayload(), RecurrentEventCreatedPayload.class);
 
-        for(SingleEventCreatedPayload eventCreated : recurrentEventCreatedPayload.events()) {
+        List<SingleEventCreatedPayload> events = recurrentEventCreatedPayload
+                .events()
+                .stream()
+                .filter(e -> e.spaceId() != null)
+                .toList();
+
+        for(SingleEventCreatedPayload eventCreated : events) {
             reserveSpaceUseCase.execute(
                     new ReserveSpaceCommand(
                             eventCreated.spaceId(),
