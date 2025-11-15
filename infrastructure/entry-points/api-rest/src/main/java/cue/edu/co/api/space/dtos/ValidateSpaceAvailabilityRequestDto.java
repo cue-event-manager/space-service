@@ -14,5 +14,7 @@ public record ValidateSpaceAvailabilityRequestDto(
         LocalTime startTime,
 
         @NotNull(message = SpaceValidation.END_TIME_REQUIRED)
-        LocalTime endTime
+        LocalTime endTime,
+
+        Long eventIdToExclude
 ) {}

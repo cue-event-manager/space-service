@@ -31,7 +31,7 @@ public class ReserveSpaceUseCase {
         validateSpaceState(space);
         validateSpaceAvailability(command);
 
-        return spaceReservationRepository.save(command.toDomain(space));
+        return spaceReservationRepository.save(command.toDomain());
     }
 
     private void validateSpaceState(Space space) {
@@ -56,7 +56,8 @@ public class ReserveSpaceUseCase {
                 command.spaceId(),
                 command.date(),
                 command.startTime(),
-                command.endTime()
+                command.endTime(),
+                null
         );
 
         if (overlap)

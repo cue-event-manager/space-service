@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -28,8 +29,15 @@ public class SpaceReservationRepositoryAdapter implements SpaceReservationReposi
     }
 
     @Override
-    public boolean existsOverlappingReservation(Long spaceId, LocalDate date, LocalTime startTime, LocalTime endTime) {
-        return spaceReservationJpaRepository.existsOverlappingReservation(spaceId,date,startTime,endTime);
+    public Optional<SpaceReservation> findByEventId(Long id) {
+        return spaceReservationJpaRepository
+                .findByEventId(id)
+                .map(spaceReservationMapper::toDomain);
+    }
+
+    @Override
+    public boolean existsOverlappingReservation(Long spaceId, LocalDate date, LocalTime startTime, LocalTime endTime, Long eventIdToExclude) {
+        return spaceReservationJpaRepository.existsOverlappingReservation(spaceId,date,startTime,endTime,eventIdToExclude);
     }
 
     @Override
