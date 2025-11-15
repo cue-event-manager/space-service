@@ -7,12 +7,13 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 public interface SpaceReservationJpaRepository extends CrudRepository<SpaceReservationEntity, Long> {
     @Query("""
         SELECT CASE WHEN COUNT(r) > 0 THEN TRUE ELSE FALSE END
         FROM SpaceReservationEntity r
-        WHERE r.space.id = :spaceId
+        WHERE r.spaceId = :spaceId
           AND r.date = :date
           AND r.startTime < :endTime
           AND r.endTime > :startTime
@@ -23,4 +24,6 @@ public interface SpaceReservationJpaRepository extends CrudRepository<SpaceReser
             @Param("startTime") LocalTime startTime,
             @Param("endTime") LocalTime endTime
     );
+
+    Optional<SpaceReservationEntity> findByEventId(Long eventId);
 }

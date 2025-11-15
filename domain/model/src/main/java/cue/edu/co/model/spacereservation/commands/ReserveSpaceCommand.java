@@ -1,10 +1,8 @@
 package cue.edu.co.model.spacereservation.commands;
 
-import cue.edu.co.model.space.Space;
 import cue.edu.co.model.spacereservation.SpaceReservation;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public record ReserveSpaceCommand(
@@ -14,9 +12,9 @@ public record ReserveSpaceCommand(
         LocalTime startTime,
         LocalTime endTime
 ) {
-    public SpaceReservation toDomain(Space space){
+    public SpaceReservation toDomain(){
         return SpaceReservation.builder()
-                .space(space)
+                .spaceId(spaceId)
                 .eventId(eventId)
                 .date(date)
                 .startTime(startTime)

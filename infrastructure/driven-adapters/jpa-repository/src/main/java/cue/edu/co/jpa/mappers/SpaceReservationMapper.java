@@ -4,7 +4,7 @@ import cue.edu.co.jpa.entities.SpaceReservationEntity;
 import cue.edu.co.model.spacereservation.SpaceReservation;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = {SpaceMapper.class})
+@Mapper(componentModel = "spring")
 public interface SpaceReservationMapper {
 
     SpaceReservationEntity toEntity(SpaceReservation space);

@@ -1,5 +1,4 @@
 package cue.edu.co.model.spacereservation;
-import cue.edu.co.model.space.Space;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -10,7 +9,7 @@ import java.time.LocalTime;
 @Builder
 public class SpaceReservation {
     private Long id;
-    private Space space;
+    private Long spaceId;
     private Long eventId;
     private LocalDate date;
     private LocalTime startTime;

@@ -48,7 +48,6 @@ public interface SpaceDtoMapper {
     ReserveSpaceCommand toCommand(Long spaceId, ReserveSpaceRequestDto dto);
 
     @Mapping(target = "reservationId", source = "id")
-    @Mapping(target = "spaceId", source = "space.id")
     ReserveSpaceResponseDto toDto(SpaceReservation reservation);
 
     GetAvailableSpacesQuery toQuery(GetAvailableSpacesRequestDto availableSpacesRequestDto);

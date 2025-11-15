@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,6 +26,13 @@ public class SpaceReservationRepositoryAdapter implements SpaceReservationReposi
                         spaceReservationMapper.toEntity(spaceReservation)
                 )
         );
+    }
+
+    @Override
+    public Optional<SpaceReservation> findByEventId(Long id) {
+        return spaceReservationJpaRepository
+                .findByEventId(id)
+                .map(spaceReservationMapper::toDomain);
     }
 
     @Override

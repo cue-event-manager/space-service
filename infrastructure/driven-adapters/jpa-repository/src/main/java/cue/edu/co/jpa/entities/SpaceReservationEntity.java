@@ -26,9 +26,7 @@ public class SpaceReservationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "space_id", nullable = false)
-    private SpaceEntity space;
+    private Long spaceId;
     private Long eventId;
 
     private LocalDate date;
