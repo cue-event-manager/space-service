@@ -36,8 +36,8 @@ public class SpaceReservationRepositoryAdapter implements SpaceReservationReposi
     }
 
     @Override
-    public boolean existsOverlappingReservation(Long spaceId, LocalDate date, LocalTime startTime, LocalTime endTime) {
-        return spaceReservationJpaRepository.existsOverlappingReservation(spaceId,date,startTime,endTime);
+    public boolean existsOverlappingReservation(Long spaceId, LocalDate date, LocalTime startTime, LocalTime endTime, Long eventIdToExclude) {
+        return spaceReservationJpaRepository.existsOverlappingReservation(spaceId,date,startTime,endTime,eventIdToExclude);
     }
 
     @Override

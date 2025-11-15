@@ -56,7 +56,8 @@ public class ReserveSpaceUseCase {
                 command.spaceId(),
                 command.date(),
                 command.startTime(),
-                command.endTime()
+                command.endTime(),
+                null
         );
 
         if (overlap)

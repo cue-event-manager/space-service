@@ -30,7 +30,8 @@ public class ValidateSpaceAvailabilityUseCase {
                 command.spaceId(),
                 command.date(),
                 command.startTime(),
-                command.endTime()
+                command.endTime(),
+                command.eventIdToExclude()
         );
 
         return !hasConflict;

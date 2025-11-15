@@ -7,5 +7,6 @@ public record ValidateSpaceAvailabilityCommand(
         Long spaceId,
         LocalDate date,
         LocalTime startTime,
-        LocalTime endTime
+        LocalTime endTime,
+        Long eventIdToExclude
 ) {}

@@ -27,9 +27,7 @@ public class EventUpdatedEventHandler implements EventHandler {
 
     @Override
     public void handle(Event event) {
-
-                                                                                                                                                                                                                      EventUpdatedPayload payload = objectMapper
-                .convertValue(event.getPayload(), EventUpdatedPayload.class);
+    EventUpdatedPayload payload = objectMapper.convertValue(event.getPayload(), EventUpdatedPayload.class);
 
         boolean affectsReservation =
                 payload.spaceChanged() ||

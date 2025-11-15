@@ -17,12 +17,14 @@ public interface SpaceReservationJpaRepository extends CrudRepository<SpaceReser
           AND r.date = :date
           AND r.startTime < :endTime
           AND r.endTime > :startTime
+          AND r.eventId <> :eventIdToExclude
     """)
     boolean existsOverlappingReservation(
             @Param("spaceId") Long spaceId,
             @Param("date") LocalDate date,
             @Param("startTime") LocalTime startTime,
-            @Param("endTime") LocalTime endTime
+            @Param("endTime") LocalTime endTime,
+            @Param("eventIdToExclude") Long eventIdToExclude
     );
 
     Optional<SpaceReservationEntity> findByEventId(Long eventId);
