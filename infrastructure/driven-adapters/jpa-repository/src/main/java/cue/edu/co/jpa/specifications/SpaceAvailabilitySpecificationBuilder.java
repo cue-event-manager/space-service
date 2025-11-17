@@ -1,7 +1,7 @@
 package cue.edu.co.jpa.specifications;
 
-
 import cue.edu.co.jpa.constants.SpaceColumn;
+import cue.edu.co.jpa.constants.SpaceReservationColumn;
 import cue.edu.co.jpa.entities.SpaceEntity;
 import cue.edu.co.jpa.entities.SpaceReservationEntity;
 import cue.edu.co.model.space.queries.GetAvailableSpacesQuery;
@@ -13,9 +13,7 @@ import java.util.List;
 
 import static cue.edu.co.jpa.constants.SpaceColumn.*;
 import static cue.edu.co.jpa.constants.SpaceReservationColumn.*;
-import static cue.edu.co.jpa.constants.SpaceReservationColumn.ID;
 import static cue.edu.co.jpa.constants.SpaceStatusColumn.CAN_BE_RESERVED;
-
 
 public class SpaceAvailabilitySpecificationBuilder
         extends AbstractSpecificationBuilder<SpaceEntity, GetAvailableSpacesQuery> {
@@ -33,20 +31,25 @@ public class SpaceAvailabilitySpecificationBuilder
                                    Root<SpaceEntity> root,
                                    CriteriaBuilder cb) {
 
+        // Only reservable spaces
         predicates.add(canBeReservedPredicate(root, cb));
 
+        // Minimum capacity filter
         addIfPresent(query.minCapacity(), predicates, minCap ->
                 cb.greaterThanOrEqualTo(root.get(CAPACITY), minCap)
         );
 
+        // Filter by campus
         addIfPresent(query.campusId(), predicates, campusId ->
                 cb.equal(root.get(CAMPUS).get(SpaceColumn.ID), campusId)
         );
 
+        // Filter by type
         addIfPresent(query.typeId(), predicates, typeId ->
                 cb.equal(root.get(TYPE).get(SpaceColumn.ID), typeId)
         );
 
+        // Exclude spaces with overlapping reservations
         predicates.add(excludeOverlappingSpacesPredicate(root, cb));
     }
 
@@ -56,7 +59,7 @@ public class SpaceAvailabilitySpecificationBuilder
 
     private Predicate excludeOverlappingSpacesPredicate(Root<SpaceEntity> root, CriteriaBuilder cb) {
         Subquery<Long> overlappingSubquery = buildOverlappingReservationsSubquery(root, cb);
-        return cb.not(root.get(ID).in(overlappingSubquery));
+        return cb.not(root.get(SpaceReservationColumn.ID).in(overlappingSubquery));
     }
 
     private Subquery<Long> buildOverlappingReservationsSubquery(Root<SpaceEntity> root, CriteriaBuilder cb) {
@@ -64,7 +67,8 @@ public class SpaceAvailabilitySpecificationBuilder
         Subquery<Long> subquery = mainQuery.subquery(Long.class);
 
         Root<SpaceReservationEntity> reservation = subquery.from(SpaceReservationEntity.class);
-        subquery.select(reservation.get(SPACE).get(SpaceColumn.ID));
+
+        subquery.select(reservation.get("spaceId"));
 
         Predicate overlapConditions = buildOverlapConditions(reservation, cb);
         subquery.where(overlapConditions);
@@ -79,6 +83,7 @@ public class SpaceAvailabilitySpecificationBuilder
     }
 
     private Predicate buildDateCondition(Root<SpaceReservationEntity> reservation, CriteriaBuilder cb) {
+
         if (query.date().isPresent()) {
             return cb.equal(reservation.get(DATE), query.date().get());
         }
